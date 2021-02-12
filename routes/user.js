@@ -18,8 +18,8 @@ Router.post('/signup', async (request, response) => {
         newUser.password = await bcrypt.hash(newUser.password, salt)
         await newUser.save()
 
-        
-        return response.send(_.pick(newUser, ['_id','name', 'email']))//trajaa name wel email mel user
+        const token = newUser.generateAuthToken()
+        return response.header('x-auth-token', token).send(_.pick(newUser, ['_id','name', 'email']))//trajaa name wel email mel user
     }
     catch(err){
         return response.status(400).send(err.message)
