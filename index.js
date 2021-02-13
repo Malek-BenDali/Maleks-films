@@ -14,7 +14,7 @@ if (!config.get('jwtPrivateKey')) {
     console.error('FATAL ERROR: jwt private key is not defined')
     process.exit(1);
 }
-mongoose.connect('mongodb://localhost/playground', {useNewUrlParser: true})
+mongoose.connect('mongodb://localhost/playground', {useNewUrlParser: true,  useUnifiedTopology: true })
     .then(console.log('Connected to db...'))
     .catch(err=>console.log(err))
 

@@ -1,6 +1,8 @@
 const express = require('express')
 const {genresModel, validation} = require('../models/genres')
 const genresRouter = express.Router()
+const auth = require('../middleware/auth')
+const admin = require('../middleware/admin')
 
 //all genres
 genresRouter.get('/', async(request, response)=>{
@@ -15,7 +17,8 @@ genresRouter.get('/', async(request, response)=>{
 })
 
 //add genre
-genresRouter.post(`/add`, async (request, response)=>{
+genresRouter.post(`/add`, auth , async (request, response)=>{
+
     const {error} = validation(request.body)
     if (error) return response.status(400).send(error.details[0].message)
 
@@ -34,7 +37,7 @@ genresRouter.post(`/add`, async (request, response)=>{
 
 
 //etid genre
-genresRouter.put(`/:id`, async (request, response)=> {
+genresRouter.put(`/:id`,auth, async (request, response)=> {
 
     const {error} = validation(request.body)
     if (error) return response.status(400).send(error.details[0].message)
@@ -51,7 +54,7 @@ genresRouter.put(`/:id`, async (request, response)=> {
 
 
 //delete genre
-genresRouter.delete(`/:id`, async (request, response)=> {
+genresRouter.delete(`/:id`,[auth, admin], async (request, response)=> {
 
     try{
         const genre = await genresModel
