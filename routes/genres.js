@@ -3,18 +3,17 @@ const {genresModel, validation} = require('../models/genres')
 const genresRouter = express.Router()
 const auth = require('../middleware/auth')
 const admin = require('../middleware/admin')
+const asyncMidlleWare = require('../middleware/async')
 
 //all genres
-genresRouter.get('/', async(request, response)=>{
-    try {const genres = await genresModel
-        .find()
-        .sort('name')
-    return response.send(genres)
+genresRouter.get('/', asyncMidlleWare(
+    async(request, response)=>{
+        const genres = await genresModel
+            .find()
+            .sort('name')
+        return response.send(genres)
     }
-    catch(err){
-        return response.send(err.message)
-    }
-})
+))
 
 //add genre
 genresRouter.post(`/add`, auth , async (request, response)=>{
