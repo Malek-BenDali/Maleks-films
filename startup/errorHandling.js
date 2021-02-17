@@ -1,3 +1,4 @@
+const logger = require('../config/logger')
 module.exports = ()=> {
     process.on('unhandledRejection', exception => {
         console.log('WE are in deep shit')
