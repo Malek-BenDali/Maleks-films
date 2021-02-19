@@ -13,6 +13,6 @@ app.use(error)
 
 
 const port = process.env.PORT || 3000
-app.listen(port, logger.info(`listening on port ${port}`))
+const server = app.listen(port, logger.info(`listening on port ${port}`))
 
-module.exports = app
+module.exports = server

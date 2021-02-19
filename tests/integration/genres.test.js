@@ -1,5 +1,5 @@
 const request = require('supertest')
-const server = require('../../index')
+let server 
 const {genresModel} =require('../../models/genres')
 const {User} =require('../../models/User')
 
@@ -10,10 +10,12 @@ describe('/api/genres', () => {
     let name
 
     beforeEach(()=>{
+        server = require('../../index')
         token = new User().generateAuthToken()
     })
 
     afterEach(async ()=>{
+        await server.close()
         await genresModel.remove({})
     })
     const execute= async () => await request(server)
