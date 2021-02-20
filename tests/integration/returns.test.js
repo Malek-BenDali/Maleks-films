@@ -130,5 +130,13 @@ describe('/api/returns', () => {
         const MoviesDb = await Movies.findById(movieId)
         expect(MoviesDb.numberInStcok).toBe(movie.numberInStcok + 1) //10sec
     })
+
+    it('should return the rental if input is valid', async() => {
+        
+        const res = await execute()
+        expect(Object.keys(res.body))
+            .toEqual(expect.arrayContaining(['dateOut', 'dateReturned', 'rentalFee',
+            'customer', 'movie']))
+    })
     
 })
